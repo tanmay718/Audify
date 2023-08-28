@@ -1,0 +1,95 @@
+<%- include('partials/header') %>
+
+  <section class="navbar-bg">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <a class="navbar-brand" href="/"><img alt="" width="32" height="32" src="/images/logo7.png"
+            class="brand-logo hidden-xs-down" />
+          <strong>audify</strong>
+        </a>
+
+      </div>
+      <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
+
+
+        <div class="navbar-nav ml-auto action-buttons">
+
+          <a href="/" class="btn login-btn">SignOut</a>
+          <a href="/secrets" class="btn login-btn">Converter</a>
+
+        </div>
+      </div>
+    </nav>
+  </section>
+  <main>
+    <div class="container my-5 history">
+      <div class="card-body">
+        <h2 class="card-title">Hello
+          <%=username%>!
+        </h2>
+        <p class="card-text">Here are your recent audios:</p>
+      </div>
+      <div class="card">
+        <table class="table table-hover">
+
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Details</th>
+              <th scope="col">Edit List </th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <% for(var i=0; i<userAudios.length; i++) { %>
+              <tr>
+                <td>
+                  <h3 class="display-7 color sub-title"><strong>
+                      <p>
+                        Video:
+                        <%=userAudios[i].videoname%>
+                      </p>
+                      <p>
+                        Audio:
+                        <%=userAudios[i].audioname%>
+                      </p>
+                    </strong> </h3>
+                </td>
+                <td>
+                  <p class="fw-bold color sub-title"><strong>Created on: <%=userAudios[i].date%> </strong> </p>
+                  <p class="fw-bold color sub-title"><strong>Last Modified: December 31, 2022</strong> </p>
+                  <p class="fw-bold color sub-title"><strong>Duration: <%=userAudios[i].duration%> sec</strong> </p>
+                  <p class="fw-bold color sub-title"><strong>Comments: 3</strong> </p>
+                </td>
+                <td>
+                  <form action="/edit" method="POST" enctype="multipart/form-data">
+                    <!-- <input type="json" accept=".json" name="userAudios[i]"> -->
+                    <button type="submit" class="btn btn-sm btn-primary" href="/edit"><i class="far fa-edit"></i>
+                      Edit</button>
+                  </form>
+                  <form action="/delete" method="POST">
+                    <input type="hidden" name="id" value="<%= userAudios[i]._id %>">
+                    <input type="hidden" name="videoname" value="<%= userAudios[i].videoname %>">
+                    <input type="hidden" name="audioname" value="<%= userAudios[i].audioname %>">
+                    <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i>
+                      Delete</button>
+                  </form>
+                </td>
+              </tr>
+              <br>
+              <% } %>
+
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+  </main>
+
+
+  <%- include('partials/footer') %>
